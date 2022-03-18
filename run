@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+ g++ main.cpp helpers.cpp draw.cpp -o mesh.out -lglut -lGLU -lGL -lSOIL -lGLEW
+ 
+ ./mesh.out
