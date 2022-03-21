@@ -47,7 +47,7 @@ struct DynamicPoint{
     Point pos;
     Point cur_dir;
     Point new_dir;
-    float speed = 0.0003f;
+    float speed = 0.0003f * 0.5;
     float rotate_speed = 0.003f; // 0 - 1
     DynamicPoint(float _x, float _y){
         pos = Point(_x, _y);
@@ -68,6 +68,8 @@ extern int cursor_width;
 
 bool out_of_bounds(int x, int y, int scr_w, int scr_h);
 float distance(float x1, float y1, float x2, float y2);
+float distance(Point p1, Point p2);
+float distance(Edge e);
 Point normalize(Point vec);
 Point keep_on_screen(Point p);
 bool get_line_intersection(Edge e1, Edge e2);

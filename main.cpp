@@ -24,7 +24,7 @@ bool time_active = true;
 
 Point curP = Point(0.0f, 0.0f);
 
-const float POINTS_CNT = 10;
+const float POINTS_CNT = 20;
 
 
 void display() {

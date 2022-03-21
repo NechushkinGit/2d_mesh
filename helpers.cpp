@@ -9,6 +9,14 @@ float distance(float x1, float y1, float x2, float y2){
   return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
+float distance(Point p1, Point p2){
+  return sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+}
+
+float distance(Edge e){
+  return sqrt((e.p2.x - e.p1.x) * (e.p2.x - e.p1.x) + (e.p2.y - e.p1.y) * (e.p2.y - e.p1.y));
+}
+
 Point normalize(Point vec){
   float length = distance(0.0f, 0.0f, vec.x, vec.y);
   if (length < 0.000001f) {
@@ -87,16 +95,28 @@ vector<Edge> triangulate(vector<DynamicPoint> points)
     for (size_t j = 0; j < i; j++)
     {
       Edge e = Edge(points[i].pos, points[j].pos);
-      bool intersects = false;
+      Edge first_intersecting = Edge(Point(), Point());
+      int intersection_index = 0;
+      int intersections = 0;
       for (size_t k = 0; k < esize; k++)
       {
         if (get_line_intersection(e, edges[k]))
         {
-          intersects = true;
+          intersections++;
+          if (intersections == 1)
+          {
+            first_intersecting = edges[k];
+            intersection_index = k;
+          }
         }
       }
-      if (!intersects)
+      if (intersections == 0)
       {
+        edges.push_back(e);
+      }
+      if (intersections == 1 && (distance(e) < distance(first_intersecting)))
+      {
+        edges.erase(edges.begin() + intersection_index);
         edges.push_back(e);
       }
     }    
